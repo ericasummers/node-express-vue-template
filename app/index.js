@@ -13,7 +13,6 @@ const cookieParser = require('cookie-parser');
 // Controllers and services
 const serverServices = require('./services/server.service');
 const homeController = require('./controllers/home.controller');
-const usersController = require('./controllers/users.controller');
 
 // create app instance
 const app = express();
@@ -28,7 +27,7 @@ app.locals.basedir = path.join(__dirname, 'resources', 'pages');
 /*****************************************
  Connect to database
  *****************************************/
-mongoose.connect('mongodb://localhost:27017/glmerge-requests');
+mongoose.connect('mongodb://localhost:27017/template-database');
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 
 /*****************************************
@@ -45,9 +44,7 @@ app.use(express.static(path.join(__dirname, 'http', 'public')));
 // Controllers
 app.get('/', homeController.index);
 // app.post('/', homeController.save);
-app.get('/requests', homeController.load);
-app.use('/users', usersController.index);
-app.get('/user/:id', usersController.profile);
+app.get('/template', homeController.load);
 
 // Error handling
 app.use(function(req, res, next) {
